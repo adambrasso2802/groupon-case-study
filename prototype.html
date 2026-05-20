@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Welcome — Giftee Activation Prototype</title>
+<style>
+  :root {
+    --grpn-green: #53A318;
+    --grpn-green-dark: #3F7F12;
+    --grpn-green-tint: #ECF7E2;
+    --bg: #F7F8FA;
+    --card: #FFFFFF;
+    --ink: #1F2328;
+    --ink-soft: #57606A;
+    --ink-muted: #8B949E;
+    --rule: #E5E7EB;
+    --ai: #6B40DA;
+    --ai-tint: #F2EDFE;
+    --warn-tint: #FFF8DE;
+    --shadow: 0 1px 2px rgba(0,0,0,.04), 0 6px 18px rgba(0,0,0,.05);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+
+  /* Top bar */
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; border-bottom: 1px solid var(--rule); background: #fff; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark { width: 28px; height: 28px; border-radius: 8px; background: var(--grpn-green); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 14px; }
+  .brand-name { font-weight: 700; letter-spacing: -0.2px; }
+  .brand-tag { font-size: 11px; color: var(--ink-muted); padding: 3px 8px; border: 1px solid var(--rule); border-radius: 999px; margin-left: 4px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .topbar-right { font-size: 12px; color: var(--ink-soft); display: flex; gap: 18px; align-items: center; }
+  .toggle { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+  .toggle input { accent-color: var(--ai); }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 0; padding: 0 24px; background: #fff; border-bottom: 1px solid var(--rule); overflow-x: auto; }
+  .tab { padding: 14px 16px; border: 0; background: transparent; cursor: pointer; font-size: 14px; color: var(--ink-soft); font-weight: 500; border-bottom: 2px solid transparent; white-space: nowrap; }
+  .tab.active { color: var(--ink); border-bottom-color: var(--grpn-green); font-weight: 600; }
+  .tab .tab-sub { display: block; font-size: 11px; color: var(--ink-muted); font-weight: 400; margin-top: 2px; }
+
+  /* Layout */
+  .stage { display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 24px; padding: 24px; max-width: 1400px; margin: 0 auto; }
+  @media (max-width: 1024px) { .stage { grid-template-columns: 1fr; } }
+
+  /* Phone frame */
+  .phone-wrap { display: flex; justify-content: center; }
+  .phone { width: 100%; max-width: 420px; background: #fff; border-radius: 28px; box-shadow: var(--shadow); overflow: hidden; border: 1px solid var(--rule); }
+  .phone-header { padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--rule); background: #fff; }
+  .phone-header .pseudo-url { font-size: 11px; color: var(--ink-muted); }
+  .phone-header .pseudo-dots { display: flex; gap: 6px; }
+  .phone-header .pseudo-dots span { width: 8px; height: 8px; border-radius: 50%; background: #E5E7EB; }
+
+  /* Welcome content */
+  .welcome { padding: 0; }
+  .hero { position: relative; height: 200px; background: linear-gradient(135deg, var(--grpn-green-dark), var(--grpn-green)); display: grid; place-items: center; color: #fff; padding: 24px; text-align: center; }
+  .hero .ribbon { position: absolute; top: 14px; left: 14px; font-size: 11px; background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.3); padding: 4px 10px; border-radius: 999px; letter-spacing: 0.3px; }
+  .hero h1 { margin: 0; font-size: 22px; line-height: 1.3; font-weight: 700; letter-spacing: -0.3px; }
+  .hero .from { font-size: 13px; opacity: .85; margin-top: 6px; }
+
+  .body { padding: 22px 22px 8px 22px; }
+  .note-card { background: var(--grpn-green-tint); border-left: 3px solid var(--grpn-green); border-radius: 8px; padding: 14px 16px; margin-bottom: 18px; position: relative; }
+  .note-card .from-label { font-size: 11px; color: var(--grpn-green-dark); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; margin-bottom: 4px; }
+  .note-card .note { font-size: 14px; line-height: 1.5; color: var(--ink); font-style: italic; }
+
+  .section-label { font-size: 11px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.6px; font-weight: 700; margin: 18px 0 8px; }
+  .scene { font-size: 14px; line-height: 1.55; color: var(--ink); position: relative; }
+  .scene p { margin: 0 0 10px; }
+
+  .merchant-card { display: flex; gap: 12px; padding: 12px; border: 1px solid var(--rule); border-radius: 10px; margin: 16px 0; }
+  .merchant-thumb { width: 56px; height: 56px; border-radius: 8px; background: linear-gradient(135deg, #BBE0A5, #53A318); flex-shrink: 0; }
+  .merchant-meta .name { font-weight: 600; font-size: 14px; }
+  .merchant-meta .where { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+  .merchant-meta .rating { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+
+  /* CTA region */
+  .cta-block { padding: 6px 22px 22px; }
+  .cta-prompt { font-size: 13px; color: var(--ink-soft); margin-bottom: 10px; }
+  .cta-stack { display: grid; gap: 8px; }
+  .cta { padding: 12px 14px; border-radius: 10px; border: 1px solid var(--rule); background: #fff; cursor: pointer; font-size: 14px; text-align: left; display: flex; justify-content: space-between; align-items: center; font-family: inherit; color: var(--ink); }
+  .cta.primary { background: var(--grpn-green); color: #fff; border-color: var(--grpn-green-dark); font-weight: 600; }
+  .cta.primary:hover { background: var(--grpn-green-dark); }
+  .cta:hover { border-color: var(--grpn-green); }
+  .cta .arrow { color: var(--ink-muted); font-size: 16px; }
+  .cta.primary .arrow { color: rgba(255,255,255,.8); }
+
+  .deferred-account { background: var(--warn-tint); border-radius: 8px; padding: 10px 12px; margin-top: 14px; font-size: 12px; color: var(--ink-soft); display: flex; gap: 8px; align-items: flex-start; }
+  .deferred-account .ico { color: var(--grpn-green-dark); font-weight: 700; }
+
+  .phone-footer { padding: 14px 22px 18px; border-top: 1px solid var(--rule); font-size: 11px; color: var(--ink-muted); text-align: center; }
+
+  /* AI annotations */
+  .ai-bracket { position: relative; }
+  .ai-bracket.show { background: linear-gradient(transparent 0, var(--ai-tint) 0); border-radius: 6px; outline: 1px dashed rgba(107, 64, 218, .35); outline-offset: 2px; transition: outline .15s ease, background .15s ease; }
+  .ai-badge { display: none; position: absolute; top: -10px; right: -6px; background: var(--ai); color: #fff; font-size: 10px; padding: 2px 7px; border-radius: 999px; letter-spacing: 0.3px; font-weight: 700; }
+  .ai-bracket.show .ai-badge { display: inline-block; }
+
+  /* Annotation panel */
+  .panel { background: #fff; border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--rule); overflow: hidden; height: fit-content; position: sticky; top: 16px; }
+  .panel-h { padding: 16px 18px; border-bottom: 1px solid var(--rule); display: flex; align-items: center; justify-content: space-between; }
+  .panel-h h2 { margin: 0; font-size: 14px; font-weight: 700; }
+  .panel-h .panel-sub { font-size: 11px; color: var(--ink-muted); }
+  .panel-body { padding: 16px 18px; font-size: 13px; line-height: 1.55; color: var(--ink); }
+  .panel-section { margin-bottom: 18px; }
+  .panel-section h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--ink-muted); margin: 0 0 8px; }
+  .kv { display: grid; grid-template-columns: 110px 1fr; gap: 6px 12px; font-size: 12.5px; color: var(--ink-soft); }
+  .kv b { color: var(--ink); font-weight: 600; }
+  .pill { display: inline-block; font-size: 10.5px; padding: 2px 8px; border-radius: 999px; background: var(--ai-tint); color: var(--ai); font-weight: 700; letter-spacing: 0.3px; margin-right: 4px; }
+  .what-ai { background: var(--ai-tint); border-radius: 8px; padding: 10px 12px; font-size: 12.5px; color: var(--ink); }
+  .what-ai b { color: var(--ai); }
+  .why-this { background: #F4FBEC; border-radius: 8px; padding: 10px 12px; font-size: 12.5px; color: var(--ink); border-left: 2px solid var(--grpn-green); }
+
+  /* Production notes */
+  .prod-notes { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 18px; margin: 0 24px 24px; max-width: 1400px; margin-left: auto; margin-right: auto; font-size: 13px; color: var(--ink); }
+  .prod-notes h2 { margin: 0 0 8px; font-size: 14px; }
+  .prod-notes details { margin-top: 8px; }
+  .prod-notes summary { cursor: pointer; font-weight: 600; color: var(--ink-soft); font-size: 12.5px; }
+  .prod-notes pre { background: #0F172A; color: #E2E8F0; padding: 14px; border-radius: 10px; font-size: 12px; line-height: 1.5; overflow-x: auto; margin-top: 10px; }
+  .prod-notes code.inline { background: #F1F3F5; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+
+  .footer-meta { padding: 12px 24px 28px; text-align: center; font-size: 11px; color: var(--ink-muted); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark">G</div>
+    <div class="brand-name">Groupon</div>
+    <div class="brand-tag">Prototype · The Welcome</div>
+  </div>
+  <div class="topbar-right">
+    <label class="toggle">
+      <input type="checkbox" id="ai-toggle" checked />
+      Show AI annotations
+    </label>
+  </div>
+</div>
+
+<div class="tabs" id="tabs">
+  <button class="tab active" data-id="spa">
+    Example 1 — Spa
+    <span class="tab-sub">Local services · birthday · email</span>
+  </button>
+  <button class="tab" data-id="dinner">
+    Example 2 — Dinner
+    <span class="tab-sub">Restaurant · anniversary · SMS</span>
+  </button>
+  <button class="tab" data-id="balloon">
+    Example 3 — Balloon
+    <span class="tab-sub">Things-to-do · graduation · email</span>
+  </button>
+</div>
+
+<div class="stage">
+
+  <!-- Phone -->
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-header">
+        <div class="pseudo-dots"><span></span><span></span><span></span></div>
+        <div class="pseudo-url" id="pseudo-url">groupon.com/gift/welcome/m72k</div>
+        <div style="width: 30px"></div>
+      </div>
+
+      <div class="welcome">
+
+        <div class="hero">
+          <div class="ribbon">A gift for you</div>
+          <h1 id="hero-title" class="ai-bracket">
+            <span class="ai-badge">AI</span>
+            Sarah got you a massage at Bliss Spa in Wicker Park.
+          </h1>
+          <div class="from" id="hero-from">from Sarah Mitchell</div>
+        </div>
+
+        <div class="body">
+
+          <div class="note-card">
+            <div class="from-label" id="note-label">Note from Sarah</div>
+            <div class="note" id="note-body">“Happy 30th, you wonder. Work has been BRUTAL — go get pampered. xo, Sarah”</div>
+          </div>
+
+          <div class="section-label">What this is</div>
+          <div class="scene ai-bracket" id="scene">
+            <span class="ai-badge">AI</span>
+            <p id="scene-text">
+              Sarah picked this for your birthday — a 60-minute deep-tissue session at Bliss Spa, a Wicker Park studio that's been quietly excellent for twelve years. Your hour starts when you arrive; they recommend showing up ten minutes early to settle in, and bringing nothing but yourself. Bliss is closed Mondays; the team books out about a week ahead on weekends.
+            </p>
+          </div>
+
+          <div class="merchant-card">
+            <div class="merchant-thumb" id="merchant-thumb"></div>
+            <div class="merchant-meta">
+              <div class="name" id="merchant-name">Bliss Spa</div>
+              <div class="where" id="merchant-where">1418 N. Milwaukee Ave · Wicker Park, Chicago</div>
+              <div class="rating" id="merchant-rating">★ 4.7 · 2,140 reviews</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cta-block">
+          <div class="section-label" style="margin-top:0">What now</div>
+          <div class="cta-prompt ai-bracket" id="cta-prompt">
+            <span class="ai-badge">AI</span>
+            <span id="cta-prompt-text">Want to plan it? Deep-tissue at Bliss books a few days out — easier to pick the time now than later.</span>
+          </div>
+          <div class="cta-stack" id="cta-stack">
+            <button class="cta primary">
+              <span id="cta-1">Book a time at Bliss Spa</span>
+              <span class="arrow">→</span>
+            </button>
+            <button class="cta">
+              <span id="cta-2">Set a reminder for next weekend</span>
+              <span class="arrow">→</span>
+            </button>
+            <button class="cta">
+              <span id="cta-3">Save and decide later</span>
+              <span class="arrow">→</span>
+            </button>
+          </div>
+
+          <div class="deferred-account">
+            <span class="ico">ⓘ</span>
+            <span>No Groupon account needed yet. We've held this gift for you at <b id="giftee-email">m.kapoor@…</b>. You'll set up your account when you redeem.</span>
+          </div>
+        </div>
+
+        <div class="phone-footer">$80 value · Expires in 6 months · Help &amp; refund policy</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Annotation panel -->
+  <div class="panel">
+    <div class="panel-h">
+      <div>
+        <h2>Teardown</h2>
+        <div class="panel-sub" id="panel-sub">Local services · birthday · cold-start giftee</div>
+      </div>
+      <span class="pill">AI behavior</span>
+    </div>
+    <div class="panel-body">
+
+      <div class="panel-section">
+        <h3>Inputs to the model</h3>
+        <div class="kv" id="inputs">
+          <b>Deal</b><span>60-min deep-tissue, Bliss Spa</span>
+          <b>Category</b><span>Local · Health &amp; Wellness</span>
+          <b>Merchant data</b><span>name, address, hours, booking URL, ratings</span>
+          <b>Giver name</b><span>Sarah Mitchell</span>
+          <b>Giver note</b><span>"Happy 30th… go get pampered"</span>
+          <b>Occasion</b><span>inferred from note: birthday</span>
+          <b>Channel</b><span>email</span>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <h3>What's AI-generated</h3>
+        <div class="what-ai" id="what-ai">
+          <p style="margin:0 0 8px"><b>Hero line</b> — phrases the deal in human terms using giver name + deal category. Never invents merchant facts.</p>
+          <p style="margin:0 0 8px"><b>Scene paragraph</b> — composes merchant context (hours, what to expect, location color) from structured fields. Hard-blocked from inventing phone numbers, prices, or hours not in metadata.</p>
+          <p style="margin:0"><b>CTA prompt</b> — one calibrated sentence sized to the deal type's typical booking pattern. Tone matches the giver's note (warm if note is warm; neutral if no note).</p>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <h3>What's <i>not</i> AI</h3>
+        <div style="font-size: 12.5px; color: var(--ink-soft); line-height: 1.55;">
+          The commitment-action options are <b>deal-type-routed templates</b>, not generated. The first action is always a primary CTA tied to the merchant's actual booking modality (online booking, phone, walk-in). AI suggests *which* option to lead with; it never invents booking links.
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <h3>Why this design</h3>
+        <div class="why-this" id="why-this">
+          The giftee is a brand-new, cold-start user. We have ~one screen to convert the gift into a planned action. AI's job is to remove cognitive load (what is this? what do I do?) by pre-doing the framing work the user would otherwise have to do alone. The commitment moment is the same Layer-1 mechanic from Part 1, deployed here because the giftee has the same problem as a direct buyer — plus less context.
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <h3>Production guardrails</h3>
+        <div style="font-size: 12.5px; color: var(--ink-soft); line-height: 1.6;">
+          • Per-render eval against fact-check rules (no hallucinated merchant data).<br/>
+          • Tone calibration: model receives the giver's note tone as a hint, never a free-form copy target.<br/>
+          • Fallback: if merchant metadata is incomplete, fall through to a static template — never ship empty-field generation.<br/>
+          • Human review on the eval set (200 deals) before global rollout. Reviewers can flag tone, accuracy, and any cultural misfires.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Production notes -->
+<div class="prod-notes">
+  <h2>How this would work in production</h2>
+  <div style="font-size: 13px; color: var(--ink-soft); line-height: 1.6;">
+    The Welcome is rendered server-side on giftee landing. The model call is a single structured generation against deal + giver + giftee context. Latency budget &lt;1.2s p95; cache by <code class="inline">deal_id + giver_note_hash</code> for re-renders (purchaser preview uses the cached output so what they see at gift purchase is exactly what the giftee will see). All four AI-generated fields are constrained outputs — the model fills slots in a controlled template rather than generating free-form HTML.
+  </div>
+
+  <details>
+    <summary>Prompt schema (Claude-style)</summary>
+<pre>system: "You write welcome copy for a gift recipient landing on Groupon for the
+        first time. Voice: warm, concrete, brief. Never invent merchant facts.
+        Use only the metadata provided. Match the tone of the giver's note if present."
+
+inputs:
+  giver_name: "Sarah Mitchell"
+  giver_note: "Happy 30th, you wonder. Work has been BRUTAL — go get pampered."
+  giftee_first_name: null         # only used if known from address book
+  deal:
+    title: "60-min deep-tissue massage"
+    category: "local.health_wellness.spa"
+    merchant:
+      name: "Bliss Spa"
+      neighborhood: "Wicker Park, Chicago"
+      booking_modality: "online_booking_partner"
+      booking_url: "https://book.blissspa.com/..."
+      hours: { closed: ["mon"], typical_lead_days_weekend: 7 }
+      review_count: 2140
+      avg_rating: 4.7
+
+outputs (structured):
+  hero_line:        string, ≤16 words, mentions giver + experience
+  scene_paragraph:  string, 50–80 words, factual context only
+  cta_prompt:       string, ≤24 words, suggests urgency calibrated to lead_days
+  cta_primary_label: string, ≤6 words, tied to booking_modality
+
+constraints:
+  - never include phone numbers, prices, or URLs not in the input
+  - never assume relationship (sister, partner, boss, etc.)
+  - if giver_note is empty, generate a neutral, deal-type-aware default
+  - if any required merchant field is missing, return null and trigger template fallback</pre>
+  </details>
+
+  <details>
+    <summary>Example outputs across all three deal types (showing the personalization is real)</summary>
+<pre>=== Example 1: Spa (birthday, warm note) ===
+hero_line: "Sarah got you a massage at Bliss Spa in Wicker Park."
+scene: "Sarah picked this for your birthday — a 60-minute deep-tissue session at Bliss Spa,
+a Wicker Park studio that's been quietly excellent for twelve years. Your hour starts when
+you arrive; they recommend showing up ten minutes early to settle in, and bringing nothing
+but yourself. Bliss is closed Mondays; the team books out about a week ahead on weekends."
+cta_prompt: "Want to plan it? Deep-tissue at Bliss books a few days out — easier to pick
+the time now than later."
+cta_primary: "Book a time at Bliss Spa"
+
+=== Example 2: Restaurant (anniversary, casual note) ===
+hero_line: "David got you and your partner a dinner at La Vie en Rose."
+scene: "David sent this for your anniversary — $80 to spend at La Vie en Rose, a small
+French bistro in Lincoln Park known for steak frites and a wine list that punches above
+its weight. Reservations are typical for Friday and Saturday; they take walk-ins on
+weeknights but the kitchen quiets after 9:30."
+cta_prompt: "Pick a date now — Fridays and Saturdays go fast, especially in the next two weeks."
+cta_primary: "Reserve on OpenTable"
+
+=== Example 3: Hot air balloon (graduation, parent note) ===
+hero_line: "Your mom got you a sunrise balloon flight in Napa, for two."
+scene: "Mom picked something for the new chapter — a sunrise balloon ride over Napa Valley
+for two people, with a sparkling toast on landing. Flights launch about 30 minutes before
+sunrise, so you'll want to be at the launch site early; the operator handles the rest. Wind
+is the only variable — if the morning isn't flyable they rebook at no charge."
+cta_prompt: "Pick your sunrise — weekends in spring book ahead by a month or so."
+cta_primary: "See available mornings"</pre>
+  </details>
+</div>
+
+<div class="footer-meta">
+  Prototype · single-file HTML · three pre-generated examples · no external dependencies
+</div>
+
+<script>
+  const examples = {
+    spa: {
+      hero: "Sarah got you a massage at Bliss Spa in Wicker Park.",
+      from: "from Sarah Mitchell",
+      noteLabel: "Note from Sarah",
+      noteBody: "“Happy 30th, you wonder. Work has been BRUTAL — go get pampered. xo, Sarah”",
+      scene: "Sarah picked this for your birthday — a 60-minute deep-tissue session at Bliss Spa, a Wicker Park studio that's been quietly excellent for twelve years. Your hour starts when you arrive; they recommend showing up ten minutes early to settle in, and bringing nothing but yourself. Bliss is closed Mondays; the team books out about a week ahead on weekends.",
+      merchantName: "Bliss Spa",
+      merchantWhere: "1418 N. Milwaukee Ave · Wicker Park, Chicago",
+      merchantRating: "★ 4.7 · 2,140 reviews",
+      ctaPrompt: "Want to plan it? Deep-tissue at Bliss books a few days out — easier to pick the time now than later.",
+      cta1: "Book a time at Bliss Spa",
+      cta2: "Set a reminder for next weekend",
+      cta3: "Save and decide later",
+      gifteeEmail: "m.kapoor@…",
+      url: "groupon.com/gift/welcome/m72k",
+      panelSub: "Local services · birthday · cold-start giftee",
+      thumb: "linear-gradient(135deg, #BBE0A5, #53A318)",
+      inputs: [
+        ["Deal", "60-min deep-tissue, Bliss Spa"],
+        ["Category", "Local · Health &amp; Wellness"],
+        ["Merchant data", "name, address, hours, booking URL, ratings"],
+        ["Giver name", "Sarah Mitchell"],
+        ["Giver note", "&ldquo;Happy 30th… go get pampered&rdquo;"],
+        ["Occasion", "inferred from note: birthday"],
+        ["Channel", "email"]
+      ]
+    },
+    dinner: {
+      hero: "David got you and your partner a dinner at La Vie en Rose.",
+      from: "from David Chen",
+      noteLabel: "Note from David",
+      noteBody: "“Happy 5-year, you two. Go eat something obnoxious. — D”",
+      scene: "David sent this for your anniversary — $80 to spend at La Vie en Rose, a small French bistro in Lincoln Park known for steak frites and a wine list that punches above its weight. Reservations are typical for Friday and Saturday; they take walk-ins on weeknights but the kitchen quiets after 9:30.",
+      merchantName: "La Vie en Rose",
+      merchantWhere: "2218 N. Halsted St · Lincoln Park, Chicago",
+      merchantRating: "★ 4.6 · 890 reviews",
+      ctaPrompt: "Pick a date now — Fridays and Saturdays go fast, especially in the next two weeks.",
+      cta1: "Reserve on OpenTable",
+      cta2: "Call the restaurant",
+      cta3: "Save for the actual anniversary",
+      gifteeEmail: "j.alvarez@…",
+      url: "groupon.com/gift/welcome/p84q",
+      panelSub: "Restaurant · anniversary · cold-start giftee",
+      thumb: "linear-gradient(135deg, #F4A460, #C04D2A)",
+      inputs: [
+        ["Deal", "$80 food &amp; drink at La Vie en Rose"],
+        ["Category", "Local · Restaurants"],
+        ["Merchant data", "name, address, hours, OpenTable URL, ratings"],
+        ["Giver name", "David Chen"],
+        ["Giver note", "&ldquo;Happy 5-year, you two…&rdquo;"],
+        ["Occasion", "inferred from note: anniversary"],
+        ["Channel", "SMS"]
+      ]
+    },
+    balloon: {
+      hero: "Your mom got you a sunrise balloon flight in Napa, for two.",
+      from: "from Linda (Mom)",
+      noteLabel: "Note from Mom",
+      noteBody: "“We are so proud of you. Take Alex. Don't tell the FAA. — Mom”",
+      scene: "Mom picked something for the new chapter — a sunrise balloon ride over Napa Valley for two people, with a sparkling toast on landing. Flights launch about 30 minutes before sunrise, so you'll want to be at the launch site early; the operator handles the rest. Wind is the only variable — if the morning isn't flyable they rebook at no charge.",
+      merchantName: "Napa Valley Aloft",
+      merchantWhere: "Yountville, CA · launches near downtown",
+      merchantRating: "★ 4.9 · 1,420 reviews",
+      ctaPrompt: "Pick your sunrise — weekends in spring book ahead by a month or so.",
+      cta1: "See available mornings",
+      cta2: "Set a reminder for next weekend",
+      cta3: "Save for spring break",
+      gifteeEmail: "alex.t@…",
+      url: "groupon.com/gift/welcome/v31r",
+      panelSub: "Things to do · graduation · cold-start giftee",
+      thumb: "linear-gradient(135deg, #FFD590, #E08338)",
+      inputs: [
+        ["Deal", "Sunrise balloon flight for two, Napa"],
+        ["Category", "Things to Do · Experiences"],
+        ["Merchant data", "operator, launch site, schedule, weather policy"],
+        ["Giver name", "Linda (Mom)"],
+        ["Giver note", "&ldquo;We are so proud of you…&rdquo;"],
+        ["Occasion", "inferred from note: graduation"],
+        ["Channel", "email + printed card"]
+      ]
+    }
+  };
+
+  const $ = (s) => document.querySelector(s);
+
+  function applyExample(id) {
+    const ex = examples[id];
+    if (!ex) return;
+    $('#hero-title').childNodes[2].nodeValue = " " + ex.hero;
+    $('#hero-from').textContent = ex.from;
+    $('#note-label').textContent = ex.noteLabel;
+    $('#note-body').textContent = ex.noteBody;
+    $('#scene-text').textContent = ex.scene;
+    $('#merchant-name').textContent = ex.merchantName;
+    $('#merchant-where').textContent = ex.merchantWhere;
+    $('#merchant-rating').textContent = ex.merchantRating;
+    $('#cta-prompt-text').textContent = ex.ctaPrompt;
+    $('#cta-1').textContent = ex.cta1;
+    $('#cta-2').textContent = ex.cta2;
+    $('#cta-3').textContent = ex.cta3;
+    $('#giftee-email').textContent = ex.gifteeEmail;
+    $('#pseudo-url').textContent = ex.url;
+    $('#panel-sub').textContent = ex.panelSub;
+    $('#merchant-thumb').style.background = ex.thumb;
+
+    const inputsEl = $('#inputs');
+    inputsEl.innerHTML = '';
+    ex.inputs.forEach(([k, v]) => {
+      const b = document.createElement('b'); b.textContent = k;
+      const s = document.createElement('span'); s.innerHTML = v;
+      inputsEl.appendChild(b); inputsEl.appendChild(s);
+    });
+  }
+
+  document.querySelectorAll('.tab').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      applyExample(t.dataset.id);
+    });
+  });
+
+  const aiToggle = $('#ai-toggle');
+  function refreshAi() {
+    const on = aiToggle.checked;
+    document.querySelectorAll('.ai-bracket').forEach(el => {
+      el.classList.toggle('show', on);
+    });
+  }
+  aiToggle.addEventListener('change', refreshAi);
+  refreshAi();
+</script>
+</body>
+</html>
