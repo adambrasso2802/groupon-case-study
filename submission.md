@@ -1,7 +1,6 @@
 # Senior Product Manager, Post-Purchase: Case Study Submission
 
-**Adam Brassington · May 2026**
-**adambrasso2802@gmail.com**
+**Adam Brassington · May 2026 · adambrasso2802@gmail.com**
 
 ---
 
