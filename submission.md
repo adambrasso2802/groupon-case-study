@@ -138,17 +138,17 @@ The prototype demonstrates **"The Welcome"** for three gift types (a birthday sp
 
 ## §1. What ships in the next 60–90 days
 
-Sequenced against the JD's 30 / 60 / 90 milestones. Every workstream traces back to H1 (commitment) or its enabler H2 (deal-type specificity). Nothing else ships in this window.
+Sequenced against the role's 30 / 60 / 90 milestones. Every workstream traces back to H1 (commitment) or its enabler H2 (deal-type specificity). Nothing else ships in this window.
 
-**Days 1–14: Baseline & instrumentation.** Lock the numbers the strategy depends on: actual 30-day local-services redemption rate by sub-category; time-to-redemption distribution shape (long tail or hard cliff?); refund attribution (merchant-side vs customer-side, by reason code); merchant metadata completeness audit (gate for E2 and the Welcome); commitment-action event taxonomy instrumented. *Output: the JD's Day-30 funnel audit and "top three levers."* Contingency: if refund attribution returns predominantly merchant-side (≥80%), H1 is not the right primary lever and the plan pivots upstream to merchant-quality coordination before redemption work scales.
+**Days 1–14: Baseline & instrumentation.** Lock the numbers the strategy depends on: actual 30-day local-services redemption rate by sub-category; time-to-redemption distribution shape (long tail or hard cliff?); refund attribution (merchant-side vs customer-side, by reason code); merchant metadata completeness audit (gate for E2 and the Welcome); commitment-action event taxonomy instrumented. *Output: the role's Day-30 funnel audit and "top three levers."* Contingency: if refund attribution returns predominantly merchant-side (≥80%), H1 is not the right primary lever and the plan pivots upstream to merchant-quality coordination before redemption work scales.
 
-**Days 15–35: E1 build and launch ("Plan-it").** Single-market, single-sub-category start, in health & wellness where TTR is worst. **This is a deliberate inversion of the usual "pilot in your strongest sub-category" instinct: clean signal-to-noise matters more than ceiling, and if the mechanic fails it should fail where users are already underserved, not where they're paying full attention.** Three deal-modality variants (booking partner / phone / walk-in). E1 magnitude locked against actual baseline. *JD's Day-60 milestone: first AI-driven or A/B experiment live.* Leading indicator starts reading by week 5.
+**Days 15–35: E1 build and launch ("Plan-it").** Single-market, single-sub-category start, in health & wellness where TTR is worst. **This is a deliberate inversion of the usual "pilot in your strongest sub-category" instinct: clean signal-to-noise matters more than ceiling, and if the mechanic fails it should fail where users are already underserved, not where they're paying full attention.** Three deal-modality variants (booking partner / phone / walk-in). E1 magnitude locked against actual baseline. *the role's Day-60 milestone: first AI-driven or A/B experiment live.* Leading indicator starts reading by week 5.
 
 **Days 35–60: E2 build in parallel.** AI prompt scaffold, fallback templates (Arm B, shippable on its own), eval-set construction (200 deals), human-review loop. Merchant metadata gap-filling for top ~100 in-scope merchants. E2 cannot launch without the eval pipeline.
 
 **Days 60–75: E1 readout, E2 launch.** E1 wins, partially wins, or doesn't; roll to remaining sub-categories or pivot. E2 enters three-arm experiment against the post-E1 baseline.
 
-**Days 75–90: Giftee Welcome controlled rollout, Q5–Q6 roadmap.** The Welcome reuses E2's AI primitive; it cannot precede it. Launches to a controlled slice of gifted purchases in sub-categories where E1 and E2 already ship. *JD's Day-90 milestone: first experiment results in, two-quarter roadmap drafted with AI features as primary lever.*
+**Days 75–90: Giftee Welcome controlled rollout, Q5–Q6 roadmap.** The Welcome reuses E2's AI primitive; it cannot precede it. Launches to a controlled slice of gifted purchases in sub-categories where E1 and E2 already ship. *the role's Day-90 milestone: first experiment results in, two-quarter roadmap drafted with AI features as primary lever.*
 
 **Three priorities in plain English.** Get the baseline. Ship the commitment mechanic. Ship the AI primitive (E2) and reuse it for giftees.
 
