@@ -128,7 +128,7 @@ Purchaser anxiety has a specific shape: *did it land, did it land well, will the
 
 ## §3. AI-Enabled Prototype
 
-See `prototype.html` and the production spec in `prototype_spec.md`. A live version of the same concept is also at `https://giftee-landing-demo.lovable.app/`.
+See `prototype.html`. A live version of the same concept is also at `https://giftee-landing-demo.lovable.app/`.
 
 The prototype demonstrates **"The Welcome"** for three gift types (a birthday spa, an anniversary dinner, a graduation experience), each rendered with AI-personalized framing, merchant context, and a deal-type-aware commitment CTA. The annotation panel calls out what is AI-driven, what data feeds it, and the production prompt schema. The three examples are pre-generated to demonstrate the personalization is real (different tone, different next-step, different merchant context per deal type) rather than a single template with field substitution. The HTML prototype carries the production-spec annotations; the Lovable build is the same concept rendered as a polished React app for quick browser viewing.
 
