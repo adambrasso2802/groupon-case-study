@@ -187,21 +187,3 @@ Used per the operating principle: AI compressed the time from question to eviden
 **What AI did *not* do.** Pick the root cause (T2 with T3 reframe; my call after the three were laid out). Pick the deprioritization (short-term refund volume in the principle; loyalty program in §2). Decide the experiment structure: the three-arm E2, the sandbagged E1 magnitudes, and the absence-of-negative Buy-Again gate were all edits I made on the AI's first draft. Name the load-bearing assumption (the leadership hypothesis itself is the answer; AI tried to point at the commitment-mechanism assumption first, which is the easier target).
 
 The work is shaped by AI; the conviction is mine.
-
----
-
-# Self-evaluation against the brief's criteria
-
-Honest 1–5 against the evaluation criteria, with the weakest link flagged.
-
-| Criterion | Rating | Why |
-|---|---|---|
-| Diagnosing with data signals + behavioral reasoning | **4.5** | The H1/H2 split with the why-secondary reasoning is defensible. The four-signal triangulation (declining redemption only in local, rising TTR, late support contacts, expiry-driven refund tail) is genuine behavioral reasoning. **Weakness:** I made stated working assumptions on the metrics tree (~55% baseline, ~25% redeemer repeat, ~8% non-redeemer repeat), explicitly disclosed in §1. Defensible but unverified. |
-| Judgment on what to prioritize, defer, and why | **4.5** | The loyalty deferral is a real senior call: commercially attractive, in-lane, deliberately deferred for sequencing reasons. The "activate, don't notify" deprioritization of refund volume is the kind of trade most candidates won't name. The "worst sub-category first" inversion is the one sequencing call worth surfacing. **Weakness:** the loyalty deferral assumes the commercial team accepts a one-quarter delay, which would need active stakeholder management I haven't scoped here. |
-| Comfort with ambiguity, explicit assumptions | **4.0** | Assumptions named throughout (baseline ranges, refund tolerance, what falsifies the plan). **Weakness:** the §1 working-assumptions disclosure covers the baseline question honestly, but in practice I'd want a five-point sensitivity range, not a single point estimate. |
-| Understanding how retention, trust, and revenue interact | **4.5** | Retention is treated as a function of trust (the Buy-Again gating logic, the giftee Welcome's deferred-account move), not just metric optimization. The deprioritization of refund volume *for* retention is the cleanest expression of this. |
-| Clarity and structured thinking | **4.0** | The local-vs-goods leading-indicator distinction is the single sharpest call. The three-layer system is structured cleanly. **Weakness:** Part 3 §1 sequencing reads competent but conventional; the worst-sub-category-first call is the one genuinely non-obvious sequencing judgment in that section. |
-
-**Weakest link: the metrics-tree assumptions in the diagnosis section.** They're load-bearing for the size-of-prize claim but rest on stated guesses, not data access. Honest disclosure that this is a Day-1 dependency for the actual job is the right move; pretending the numbers are verified would be worse.
-
-**Strongest section: §3 of Part 3.** Questioning the leadership hypothesis itself, naming the falsifier, naming the pivot. That's the senior-PM move the brief is testing for.
